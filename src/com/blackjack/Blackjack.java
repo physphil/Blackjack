@@ -58,7 +58,7 @@ public class Blackjack {
 		else{
 			if(userScore>dealerScore) return "You win!";
 			else if(userScore<dealerScore) return "You lose!";
-			else return "You tied!";
+			else return "Push!";
 		}
 	}
 	
@@ -67,19 +67,30 @@ public class Blackjack {
 		Deck gameDeck = new Deck();
 		String playerHandString="";
 		String dealerHandString="";
+/*		boolean playAgain = true;
+		String playAgainString = "";
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);*/
 		
-		//Deal hands to the player and then the dealer
-		Hand playerHand = playAsUser(gameDeck);
-		Hand dealerHand = playAsDealer(gameDeck);
-
-		// remove final comma from the string returned from printHand()
-		playerHandString = playerHand.printHand();
-		playerHandString = playerHandString.substring(0, playerHandString.length()-2);
-		dealerHandString = dealerHand.printHand();
-		dealerHandString = dealerHandString.substring(0, dealerHandString.length()-2);
-		
-		//Print out final scores and hands
-		System.out.println(declareWinner(playerHand,dealerHand)+"\nPlayer: "+playerHand.score()+" ("+playerHandString+")\nDealer: "+dealerHand.score()+" ("+dealerHandString+")");
+		//while(playAgain){
+			//Deal hands to the player and then the dealer
+			Hand playerHand = playAsUser(gameDeck);
+			Hand dealerHand = playAsDealer(gameDeck);
+	
+			// remove final comma from the string returned from printHand()
+			playerHandString = playerHand.printHand();
+			playerHandString = playerHandString.substring(0, playerHandString.length()-2);
+			dealerHandString = dealerHand.printHand();
+			dealerHandString = dealerHandString.substring(0, dealerHandString.length()-2);
+			
+			//Print out final scores and hands
+			System.out.println(declareWinner(playerHand,dealerHand)+"\nPlayer: "+playerHand.score()+" ("+playerHandString+")\nDealer: "+dealerHand.score()+" ("+dealerHandString+")");
+			
+			//Prompt user to play again
+/*			System.out.print("Do you want to play again? (y/n)");
+			playAgainString = br.readLine();
+			playAgain = convertPlayerAction(playAgainString);*/
+		//}
 	}
 
 }

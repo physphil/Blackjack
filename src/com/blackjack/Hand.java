@@ -87,7 +87,7 @@ public class Hand {
 	 */
 	
 	public Card deal(Deck gameDeck){
-		int index = (int) (Math.floor(Math.random()*gameDeck.activeDeck.size())+1);
+		int index = (int) (Math.floor(Math.random()*gameDeck.activeDeck.size()));
 		int card = gameDeck.activeDeck.get(index);
 		int suit = (int) (Math.floor(card/13)+1);
 		int number = card%13+1;
