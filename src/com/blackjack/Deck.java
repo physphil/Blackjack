@@ -23,4 +23,12 @@ public class Deck {
 		}
 		System.out.println("");
 	}
+	
+	// Empties list of cards and resets to a full deck
+	public void shuffle(){
+		activeDeck.clear();
+		for (int i=0;i<52;i++){
+			activeDeck.add(i);
+		}
+	}
 }

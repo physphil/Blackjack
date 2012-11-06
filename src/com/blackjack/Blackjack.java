@@ -25,16 +25,20 @@ public class Blackjack {
 	//Create hand for the player, prompt for cards
 	public static Hand playAsUser(Deck gameDeck) throws IOException{
 		Hand playerHand = new Hand(gameDeck);
+		boolean playerAction = true;
+		String playerActionString = "";
+		boolean noBust = true;
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
-		System.out.println(playerHand.printHand()+"do you want to hit? (y/n)");
-		String playerActionString = br.readLine();
-		boolean playerAction = convertPlayerAction(playerActionString);
-		while(playerAction){
-			playerHand.hitMe();
-			System.out.println(playerHand.printHand()+"do you want to hit? (y/n)");
+		
+		while(playerAction && noBust){
+			System.out.print(playerHand.score()+" - "+playerHand.printHand()+"do you want to hit? (y/n)");
 			playerActionString = br.readLine();
 			playerAction = convertPlayerAction(playerActionString);
+			if (playerAction){
+				playerHand.hitMe();
+				if (playerHand.score() > 21) noBust = false;
+			}			
 		}
 		return playerHand;
 	}
@@ -67,12 +71,12 @@ public class Blackjack {
 		Deck gameDeck = new Deck();
 		String playerHandString="";
 		String dealerHandString="";
-/*		boolean playAgain = true;
+		boolean playAgain = true;
 		String playAgainString = "";
 		InputStreamReader isr = new InputStreamReader(System.in);
-		BufferedReader br = new BufferedReader(isr);*/
+		BufferedReader br = new BufferedReader(isr);
 		
-		//while(playAgain){
+		while(playAgain){
 			//Deal hands to the player and then the dealer
 			Hand playerHand = playAsUser(gameDeck);
 			Hand dealerHand = playAsDealer(gameDeck);
@@ -84,13 +88,22 @@ public class Blackjack {
 			dealerHandString = dealerHandString.substring(0, dealerHandString.length()-2);
 			
 			//Print out final scores and hands
-			System.out.println(declareWinner(playerHand,dealerHand)+"\nPlayer: "+playerHand.score()+" ("+playerHandString+")\nDealer: "+dealerHand.score()+" ("+dealerHandString+")");
+			System.out.println("\n"+declareWinner(playerHand,dealerHand)+"\n\nPlayer: "+playerHand.score()+" ("+playerHandString+")\nDealer: "+dealerHand.score()+" ("+dealerHandString+")");
+			System.out.println(gameDeck.activeDeck.size()+" cards remaining");
 			
 			//Prompt user to play again
-/*			System.out.print("Do you want to play again? (y/n)");
+			System.out.print("\nDo you want to play again? (y/n)");
 			playAgainString = br.readLine();
-			playAgain = convertPlayerAction(playAgainString);*/
-		//}
+			playAgain = convertPlayerAction(playAgainString);
+			
+			// Shuffle deck if there is less than 15 cards available
+			if(playAgain && gameDeck.activeDeck.size()<15){
+				System.out.println("You're almost out of cards!  Reshuffling...");
+				gameDeck.shuffle();
+			}
+			System.out.println("-------------------");
+			System.out.println("");
+		}
 	}
 
 }
